@@ -19,178 +19,190 @@
     --card-radius: 18px;
     --shadow: 0 4px 28px rgba(27,43,94,0.10);
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     font-family: 'Nunito', sans-serif;
     background: var(--light-bg);
     color: var(--navy);
     line-height: 1.7;
   }
+
   @media print {
     body { background: white; }
-    .download-btn { display: none !important; }
-    .copy-btn { display: none !important; }
+    .download-btn, .copy-btn { display: none !important; }
     .hero, .tips-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .prompt-card, .step-card { break-inside: avoid; }
-    .prompt-code-box { max-height: none; overflow: visible; }
+    .prompt-code-box { max-height: none !important; overflow: visible !important; }
   }
 
-  /* HERO */
+  /* ---- HERO ---- */
   .hero {
     background: linear-gradient(135deg, var(--navy) 0%, #253B80 60%, #1AAFA3 100%);
-    padding: 56px 40px 48px;
+    padding: 52px 24px 44px;
     text-align: center;
     position: relative;
     overflow: hidden;
   }
   .hero::before {
-    content: '';
-    position: absolute; top: -60px; right: -60px;
-    width: 260px; height: 260px; border-radius: 50%;
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 220px; height: 220px; border-radius: 50%;
     background: rgba(26,175,163,0.18);
   }
   .hero::after {
-    content: '';
-    position: absolute; bottom: -50px; left: -50px;
-    width: 200px; height: 200px; border-radius: 50%;
+    content: ''; position: absolute; bottom: -50px; left: -50px;
+    width: 180px; height: 180px; border-radius: 50%;
     background: rgba(245,166,35,0.12);
   }
   .hero-badge {
     display: inline-block;
-    background: rgba(245,166,35,0.22);
-    color: var(--gold);
-    font-weight: 700; font-size: 12px; letter-spacing: 2px;
-    text-transform: uppercase; padding: 6px 18px;
-    border-radius: 50px; margin-bottom: 18px;
+    background: rgba(245,166,35,0.22); color: var(--gold);
+    font-weight: 700; font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 16px;
+    border-radius: 50px; margin-bottom: 16px;
     border: 1px solid rgba(245,166,35,0.35);
   }
-  .hero h1 { font-size: 36px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+  .hero h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 10px;
+  }
   .hero h1 span { color: var(--gold); }
   .hero-sub {
-    font-size: 15px; color: rgba(255,255,255,0.75); font-weight: 500;
-    max-width: 520px; margin: 0 auto 28px;
+    font-size: clamp(13px, 2.5vw, 15px);
+    color: rgba(255,255,255,0.75); font-weight: 500;
+    max-width: 500px; margin: 0 auto 24px;
   }
-  .hero-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .hero-pills {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 8px;
+  }
   .hero-pill {
     background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.22);
-    color: #fff; font-size: 13px; font-weight: 600; padding: 6px 16px;
-    border-radius: 50px; display: flex; align-items: center; gap: 6px;
+    color: #fff; font-size: 12px; font-weight: 600; padding: 5px 14px;
+    border-radius: 50px; display: flex; align-items: center; gap: 5px;
   }
   .download-btn {
-    display: inline-block; margin: 28px auto 0;
+    display: inline-block; margin: 24px auto 0;
     background: var(--gold); color: var(--navy);
     font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800;
-    padding: 13px 32px; border-radius: 50px; border: none; cursor: pointer;
+    padding: 12px 28px; border-radius: 50px; border: none; cursor: pointer;
     box-shadow: 0 4px 18px rgba(245,166,35,0.4); transition: all 0.2s;
+    position: relative; z-index: 1;
   }
   .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,166,35,0.5); }
 
-  /* LAYOUT */
-  .container { max-width: 920px; margin: 0 auto; padding: 40px 24px 60px; }
+  /* ---- CONTAINER ---- */
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 16px 60px; }
 
+  /* ---- SECTION LABEL ---- */
   .section-label {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 20px; margin-top: 36px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px; margin-top: 36px;
   }
-  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
-  .section-label h2 { font-size: 20px; font-weight: 800; color: var(--navy); white-space: nowrap; }
+  .section-label .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .section-label h2 { font-size: clamp(16px, 3vw, 20px); font-weight: 800; color: var(--navy); white-space: nowrap; }
   .section-label .line {
     flex: 1; height: 2px;
     background: linear-gradient(90deg, var(--teal) 0%, transparent 100%);
     border-radius: 2px; opacity: 0.3;
   }
 
-  /* OVERVIEW */
+  /* ---- OVERVIEW ---- */
   .overview-card {
     background: var(--white); border-radius: var(--card-radius);
-    box-shadow: var(--shadow); padding: 28px 32px;
-    display: flex; gap: 24px; align-items: flex-start;
-    border-left: 5px solid var(--teal); margin-bottom: 8px;
+    box-shadow: var(--shadow); padding: 24px 24px;
+    display: flex; gap: 20px; align-items: flex-start;
+    border-left: 5px solid var(--teal);
   }
   .overview-icon {
-    width: 52px; height: 52px; background: var(--teal-light);
+    width: 48px; height: 48px; background: var(--teal-light);
     border-radius: 14px; display: flex; align-items: center; justify-content: center;
-    font-size: 24px; flex-shrink: 0;
+    font-size: 22px; flex-shrink: 0;
   }
-  .overview-text h3 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
-  .overview-text p { font-size: 14px; color: var(--gray); font-weight: 500; }
-  .overview-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-  .tool-tag { padding: 4px 14px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+  .overview-text h3 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 5px; }
+  .overview-text p { font-size: 13.5px; color: var(--gray); font-weight: 500; }
+  .overview-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .tool-tag { padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; }
   .tool-tag.chatgpt { background: #E8F5E9; color: #2E7D32; }
   .tool-tag.claude { background: var(--navy-light); color: var(--navy); }
   .tool-tag.free { background: var(--gold-light); color: #B45309; }
 
-  /* PROMPT CARDS */
+  /* ---- PROMPT CARDS ---- */
   .prompt-card {
     background: var(--white); border-radius: var(--card-radius);
-    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 28px;
+    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px;
   }
   .prompt-header {
-    padding: 20px 28px 18px; display: flex; align-items: center; gap: 16px;
+    padding: 18px 24px; display: flex; align-items: center; gap: 14px;
   }
   .prompt-header.p1 { background: linear-gradient(120deg, var(--navy) 0%, #253B80 100%); }
   .prompt-header.p2 { background: linear-gradient(120deg, #0F8A81 0%, var(--teal) 100%); }
   .prompt-num {
-    width: 42px; height: 42px; border-radius: 12px;
+    width: 40px; height: 40px; border-radius: 11px;
     background: rgba(255,255,255,0.18);
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0;
+    font-size: 17px; font-weight: 900; color: #fff; flex-shrink: 0;
   }
-  .prompt-header-text h3 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
-  .prompt-header-text p { font-size: 12px; color: rgba(255,255,255,0.72); font-weight: 500; }
+  .prompt-header-text h3 { font-size: 14px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+  .prompt-header-text p { font-size: 11.5px; color: rgba(255,255,255,0.72); font-weight: 500; }
 
-  .prompt-layout { display: grid; grid-template-columns: 1fr 240px; }
+  /* Desktop: side by side */
+  .prompt-layout {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+  }
 
-  .prompt-code-side { padding: 22px 24px 24px; border-right: 1.5px solid #EEF1F9; }
-  .code-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-  .code-label-text { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray); }
+  .prompt-code-side { padding: 20px 22px 22px; border-right: 1.5px solid #EEF1F9; min-width: 0; }
+  .code-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+  .code-label-text { font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray); }
 
   .copy-btn {
     background: var(--navy-light); color: var(--navy);
-    border: none; border-radius: 8px; padding: 5px 13px;
+    border: none; border-radius: 8px; padding: 6px 14px;
     font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
-    cursor: pointer; transition: all 0.15s;
+    cursor: pointer; transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
   }
   .copy-btn:hover { background: var(--navy); color: #fff; }
   .copy-btn.teal-style { background: var(--teal-light); color: #0F8A81; }
   .copy-btn.teal-style:hover { background: var(--teal); color: #fff; }
 
   .prompt-code-box {
-    background: #0F1729; border-radius: 12px; padding: 18px 20px;
-    font-family: 'Courier New', monospace; font-size: 12px;
-    line-height: 1.8; color: #C9D8FF;
+    background: #0F1729; border-radius: 12px; padding: 16px 18px;
+    font-family: 'Courier New', monospace; font-size: 12.5px;
+    line-height: 1.85; color: #C9D8FF;
     white-space: pre-wrap; word-break: break-word;
-    max-height: 380px; overflow-y: auto;
+    max-height: 400px; overflow-y: auto;
     scrollbar-width: thin; scrollbar-color: #253B80 #0F1729;
   }
   .prompt-code-box::-webkit-scrollbar { width: 5px; }
   .prompt-code-box::-webkit-scrollbar-track { background: #0F1729; border-radius: 10px; }
   .prompt-code-box::-webkit-scrollbar-thumb { background: #253B80; border-radius: 10px; }
 
-  .prompt-info-side { padding: 22px 18px 24px; background: #FAFBFF; }
+  /* Info sidebar (desktop) */
+  .prompt-info-side { padding: 20px 16px 22px; background: #FAFBFF; }
   .info-side-title {
-    font-size: 10.5px; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 1.2px; color: var(--gray); margin-bottom: 12px;
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--gray); margin-bottom: 11px;
   }
-  .info-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 7px; }
   .info-list li {
-    display: flex; align-items: flex-start; gap: 8px;
-    font-size: 12.5px; color: #374151; font-weight: 600; line-height: 1.4;
+    display: flex; align-items: flex-start; gap: 7px;
+    font-size: 12px; color: #374151; font-weight: 600; line-height: 1.4;
   }
-  .info-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .info-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
   .info-dot.navy { background: var(--navy); }
   .info-dot.teal { background: var(--teal); }
-  .info-divider { height: 1.5px; background: #E5E9F5; border-radius: 2px; margin: 14px 0; }
+  .info-divider { height: 1.5px; background: #E5E9F5; border-radius: 2px; margin: 12px 0; }
   .info-note {
-    background: var(--teal-light); border-radius: 10px; padding: 10px 12px;
-    font-size: 12px; font-weight: 600; color: #0F5D59; line-height: 1.5;
+    background: var(--teal-light); border-radius: 10px; padding: 10px 11px;
+    font-size: 11.5px; font-weight: 600; color: #0F5D59; line-height: 1.5;
   }
 
-  /* STEPS */
-  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  /* ---- STEPS ---- */
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .step-card {
     background: var(--white); border-radius: var(--card-radius);
-    box-shadow: var(--shadow); padding: 22px 22px 20px;
+    box-shadow: var(--shadow); padding: 20px 20px 18px;
     position: relative; overflow: hidden;
   }
   .step-card::before {
@@ -204,9 +216,9 @@
   .step-card.s6::before { background: var(--navy); }
   .step-badge {
     display: inline-flex; align-items: center;
-    font-size: 11px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; padding: 4px 12px;
-    border-radius: 50px; margin-bottom: 10px;
+    font-size: 10.5px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 11px;
+    border-radius: 50px; margin-bottom: 9px;
   }
   .step-badge.s1 { background: var(--navy-light); color: var(--navy); }
   .step-badge.s2 { background: var(--teal-light); color: #0F8A81; }
@@ -214,43 +226,122 @@
   .step-badge.s4 { background: #F3EEFF; color: #5B21B6; }
   .step-badge.s5 { background: var(--teal-light); color: #0F8A81; }
   .step-badge.s6 { background: var(--navy-light); color: var(--navy); }
-  .step-card h3 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-  .step-card p, .step-card li { font-size: 13px; color: #4B5563; font-weight: 500; line-height: 1.6; }
-  .step-card ul { padding-left: 16px; margin-top: 6px; }
+  .step-card h3 { font-size: 14px; font-weight: 800; color: var(--navy); margin-bottom: 7px; }
+  .step-card p, .step-card li { font-size: 12.5px; color: #4B5563; font-weight: 500; line-height: 1.6; }
+  .step-card ul { padding-left: 15px; margin-top: 5px; }
   .step-card ul li { margin-bottom: 3px; }
-  .focus-box { margin-top: 12px; background: var(--gold-light); border-radius: 10px; padding: 10px 14px; }
-  .focus-box p { font-size: 11px; font-weight: 800; color: #92400E; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .focus-box { margin-top: 11px; background: var(--gold-light); border-radius: 10px; padding: 9px 13px; }
+  .focus-box p { font-size: 10.5px; font-weight: 800; color: #92400E; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.8px; }
   .focus-box span { font-size: 12px; font-weight: 600; color: #78350F; }
   .notice-inline {
-    background: var(--teal-light); border-radius: 10px; padding: 10px 13px;
-    font-size: 12px; font-weight: 600; color: #0F5D59; margin-top: 12px;
+    background: var(--teal-light); border-radius: 10px; padding: 9px 12px;
+    font-size: 12px; font-weight: 600; color: #0F5D59; margin-top: 11px;
   }
-  .format-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-  .fmt-tag { padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+  .format-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 11px; }
+  .fmt-tag { padding: 4px 11px; border-radius: 50px; font-size: 11.5px; font-weight: 700; }
   .fmt-tag.pdf { background: #FEE2E2; color: #991B1B; }
   .fmt-tag.docx { background: var(--navy-light); color: var(--navy); }
 
-  /* TIPS */
+  /* ---- TIPS ---- */
   .tips-card {
     background: linear-gradient(135deg, var(--navy) 0%, #1E3A8A 100%);
-    border-radius: var(--card-radius); padding: 28px 32px; margin-top: 36px; color: #fff;
+    border-radius: var(--card-radius); padding: 26px 28px; margin-top: 32px;
   }
-  .tips-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
-  .tips-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .tips-card h3 { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 16px; }
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
   .tip {
     background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 12px; padding: 14px;
+    border-radius: 12px; padding: 13px;
   }
-  .tip-icon { font-size: 20px; margin-bottom: 6px; }
-  .tip p { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.85); }
+  .tip-icon { font-size: 19px; margin-bottom: 5px; }
+  .tip p { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.85); }
 
-  /* FOOTER */
-  .footer { text-align: center; padding: 20px 20px 36px; font-size: 12.5px; color: #9CA3AF; font-weight: 500; }
+  /* ---- FOOTER ---- */
+  .footer { text-align: center; padding: 20px 16px 36px; font-size: 12px; color: #9CA3AF; font-weight: 500; }
   .footer span { color: var(--teal); font-weight: 700; }
+
+  /* ==============================
+     MOBILE RESPONSIVE
+  ============================== */
+  @media (max-width: 640px) {
+
+    .hero { padding: 40px 18px 36px; }
+    .hero::before { width: 140px; height: 140px; top: -40px; right: -30px; }
+    .hero::after { width: 110px; height: 110px; bottom: -30px; left: -30px; }
+    .hero-badge { font-size: 10px; letter-spacing: 1.5px; padding: 5px 13px; }
+
+    .container { padding: 24px 14px 50px; }
+
+    .section-label { margin-top: 28px; margin-bottom: 14px; }
+    .section-label h2 { font-size: 16px; }
+
+    /* Overview: stack icon + text */
+    .overview-card { flex-direction: column; gap: 14px; padding: 20px 18px; }
+    .overview-icon { width: 44px; height: 44px; font-size: 20px; }
+
+    /* Prompt card: stack code + info */
+    .prompt-layout {
+      display: flex;
+      flex-direction: column;
+    }
+    .prompt-code-side {
+      padding: 18px 16px 18px;
+      border-right: none;
+      border-bottom: 1.5px solid #EEF1F9;
+    }
+    .prompt-code-box {
+      font-size: 12px;
+      max-height: 300px;
+      padding: 14px 14px;
+      border-radius: 10px;
+    }
+    .prompt-info-side {
+      padding: 16px 16px 18px;
+      background: #FAFBFF;
+    }
+    /* On mobile, show info as horizontal wrapping chips */
+    .info-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .info-list li {
+      background: var(--navy-light);
+      padding: 4px 11px 4px 8px;
+      border-radius: 50px;
+      font-size: 11.5px;
+      color: var(--navy);
+      font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .info-list li .info-dot { margin-top: 0; }
+    .info-divider { margin: 12px 0 10px; }
+
+    .prompt-header { padding: 15px 16px; gap: 12px; }
+    .prompt-header-text h3 { font-size: 13px; }
+    .prompt-header-text p { font-size: 11px; }
+
+    /* Steps: single column on mobile */
+    .steps-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Tips: 2 col on mobile, single col on very small */
+    .tips-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .tips-card { padding: 20px 16px; }
+    .tips-card h3 { font-size: 15px; }
+
+    .copy-btn { padding: 6px 12px; font-size: 11.5px; }
+  }
+
+  @media (max-width: 380px) {
+    .tips-grid { grid-template-columns: 1fr; }
+    .hero-pills { gap: 6px; }
+    .hero-pill { font-size: 11px; padding: 4px 11px; }
+  }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-badge">Free Method · No Premium Needed</div>
   <h1>ATS Resume <span>Creation Guide</span></h1>
@@ -266,6 +357,7 @@
 
 <div class="container">
 
+  <!-- OVERVIEW -->
   <div class="section-label">
     <div class="dot"></div>
     <h2>What This Guide Does</h2>
@@ -284,6 +376,7 @@
     </div>
   </div>
 
+  <!-- PROMPTS -->
   <div class="section-label">
     <div class="dot"></div>
     <h2>The Prompts</h2>
@@ -492,7 +585,7 @@ Do not exaggerate or invent fake experience. If information is missing, ask befo
     <div class="step-card s3">
       <div class="step-badge s3">Step 3</div>
       <h3>Use ChatGPT to Extract Details</h3>
-      <p>Paste the prompt and your resume into ChatGPT. It will read your input, ask structured questions, and identify missing details.</p>
+      <p>Paste the prompt and your resume into ChatGPT. It will read your input, ask structured questions, and identify what is missing.</p>
       <div class="focus-box">
         <p>Focus on</p>
         <span>Numbers, responsibilities, tools used, problems solved, results achieved</span>
@@ -514,7 +607,7 @@ Do not exaggerate or invent fake experience. If information is missing, ask befo
       <div class="step-badge s5">Step 5</div>
       <h3>Format Using Claude</h3>
       <p>Copy the ChatGPT output. Paste this into Claude:</p>
-      <div style="background:#0F1729; border-radius:10px; padding:12px 14px; margin-top:10px; font-family:'Courier New',monospace; font-size:11.5px; color:#C9D8FF; line-height:1.7;">
+      <div style="background:#0F1729; border-radius:10px; padding:11px 13px; margin-top:10px; font-family:'Courier New',monospace; font-size:11.5px; color:#C9D8FF; line-height:1.7; word-break:break-word;">
 "Convert this into a clean, professional, ATS-friendly resume. Keep it simple, single-column, and recruiter-friendly. Create this as a .docx"</div>
     </div>
 
@@ -526,7 +619,7 @@ Do not exaggerate or invent fake experience. If information is missing, ask befo
         <span class="fmt-tag pdf">PDF for job applications</span>
         <span class="fmt-tag docx">DOCX for portals</span>
       </div>
-      <div style="margin-top:12px; font-size:12.5px; color:#4B5563; font-weight:600;">
+      <div style="margin-top:11px; font-size:12px; color:#4B5563; font-weight:600;">
         Use a clean file name:<br>
         <span style="color:var(--navy); font-weight:800;">YourName_JobTitle_Resume.pdf</span>
       </div>
@@ -576,15 +669,30 @@ function copyPrompt(boxId, btnId) {
   navigator.clipboard.writeText(text).then(function() {
     var btn = document.getElementById(btnId);
     var orig = btn.innerText;
-    var origBg = btn.style.background;
-    var origColor = btn.style.color;
     btn.innerText = 'Copied!';
     btn.style.background = '#D1FAE5';
     btn.style.color = '#065F46';
     setTimeout(function() {
       btn.innerText = orig;
-      btn.style.background = origBg;
-      btn.style.color = origColor;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 2000);
+  }).catch(function() {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(boxId));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    var btn = document.getElementById(btnId);
+    var orig = btn.innerText;
+    btn.innerText = 'Copied!';
+    btn.style.background = '#D1FAE5';
+    btn.style.color = '#065F46';
+    setTimeout(function() {
+      btn.innerText = orig;
+      btn.style.background = '';
+      btn.style.color = '';
     }, 2000);
   });
 }
