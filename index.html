@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ATS Resume Creation Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --navy: #1B2B5E;
+    --teal: #1AAFA3;
+    --teal-light: #E6F7F6;
+    --gold: #F5A623;
+    --gold-light: #FEF6E8;
+    --navy-light: #EEF1F9;
+    --white: #FFFFFF;
+    --gray: #6B7A99;
+    --light-bg: #F4F7FB;
+    --card-radius: 18px;
+    --shadow: 0 4px 28px rgba(27,43,94,0.10);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--light-bg);
+    color: var(--navy);
+    line-height: 1.7;
+  }
+  @media print {
+    body { background: white; }
+    .download-btn { display: none !important; }
+    .copy-btn { display: none !important; }
+    .hero, .tips-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .prompt-card, .step-card { break-inside: avoid; }
+    .prompt-code-box { max-height: none; overflow: visible; }
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #253B80 60%, #1AAFA3 100%);
+    padding: 56px 40px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 260px; height: 260px; border-radius: 50%;
+    background: rgba(26,175,163,0.18);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -50px; left: -50px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(245,166,35,0.12);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(245,166,35,0.22);
+    color: var(--gold);
+    font-weight: 700; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 18px;
+    border: 1px solid rgba(245,166,35,0.35);
+  }
+  .hero h1 { font-size: 36px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+  .hero h1 span { color: var(--gold); }
+  .hero-sub {
+    font-size: 15px; color: rgba(255,255,255,0.75); font-weight: 500;
+    max-width: 520px; margin: 0 auto 28px;
+  }
+  .hero-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .hero-pill {
+    background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.22);
+    color: #fff; font-size: 13px; font-weight: 600; padding: 6px 16px;
+    border-radius: 50px; display: flex; align-items: center; gap: 6px;
+  }
+  .download-btn {
+    display: inline-block; margin: 28px auto 0;
+    background: var(--gold); color: var(--navy);
+    font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800;
+    padding: 13px 32px; border-radius: 50px; border: none; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(245,166,35,0.4); transition: all 0.2s;
+  }
+  .download-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,166,35,0.5); }
+
+  /* LAYOUT */
+  .container { max-width: 920px; margin: 0 auto; padding: 40px 24px 60px; }
+
+  .section-label {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px; margin-top: 36px;
+  }
+  .section-label .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
+  .section-label h2 { font-size: 20px; font-weight: 800; color: var(--navy); white-space: nowrap; }
+  .section-label .line {
+    flex: 1; height: 2px;
+    background: linear-gradient(90deg, var(--teal) 0%, transparent 100%);
+    border-radius: 2px; opacity: 0.3;
+  }
+
+  /* OVERVIEW */
+  .overview-card {
+    background: var(--white); border-radius: var(--card-radius);
+    box-shadow: var(--shadow); padding: 28px 32px;
+    display: flex; gap: 24px; align-items: flex-start;
+    border-left: 5px solid var(--teal); margin-bottom: 8px;
+  }
+  .overview-icon {
+    width: 52px; height: 52px; background: var(--teal-light);
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .overview-text h3 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .overview-text p { font-size: 14px; color: var(--gray); font-weight: 500; }
+  .overview-tools { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .tool-tag { padding: 4px 14px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+  .tool-tag.chatgpt { background: #E8F5E9; color: #2E7D32; }
+  .tool-tag.claude { background: var(--navy-light); color: var(--navy); }
+  .tool-tag.free { background: var(--gold-light); color: #B45309; }
+
+  /* PROMPT CARDS */
+  .prompt-card {
+    background: var(--white); border-radius: var(--card-radius);
+    box-shadow: var(--shadow); overflow: hidden; margin-bottom: 28px;
+  }
+  .prompt-header {
+    padding: 20px 28px 18px; display: flex; align-items: center; gap: 16px;
+  }
+  .prompt-header.p1 { background: linear-gradient(120deg, var(--navy) 0%, #253B80 100%); }
+  .prompt-header.p2 { background: linear-gradient(120deg, #0F8A81 0%, var(--teal) 100%); }
+  .prompt-num {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0;
+  }
+  .prompt-header-text h3 { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+  .prompt-header-text p { font-size: 12px; color: rgba(255,255,255,0.72); font-weight: 500; }
+
+  .prompt-layout { display: grid; grid-template-columns: 1fr 240px; }
+
+  .prompt-code-side { padding: 22px 24px 24px; border-right: 1.5px solid #EEF1F9; }
+  .code-label { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .code-label-text { font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray); }
+
+  .copy-btn {
+    background: var(--navy-light); color: var(--navy);
+    border: none; border-radius: 8px; padding: 5px 13px;
+    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--navy); color: #fff; }
+  .copy-btn.teal-style { background: var(--teal-light); color: #0F8A81; }
+  .copy-btn.teal-style:hover { background: var(--teal); color: #fff; }
+
+  .prompt-code-box {
+    background: #0F1729; border-radius: 12px; padding: 18px 20px;
+    font-family: 'Courier New', monospace; font-size: 12px;
+    line-height: 1.8; color: #C9D8FF;
+    white-space: pre-wrap; word-break: break-word;
+    max-height: 380px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: #253B80 #0F1729;
+  }
+  .prompt-code-box::-webkit-scrollbar { width: 5px; }
+  .prompt-code-box::-webkit-scrollbar-track { background: #0F1729; border-radius: 10px; }
+  .prompt-code-box::-webkit-scrollbar-thumb { background: #253B80; border-radius: 10px; }
+
+  .prompt-info-side { padding: 22px 18px 24px; background: #FAFBFF; }
+  .info-side-title {
+    font-size: 10.5px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 1.2px; color: var(--gray); margin-bottom: 12px;
+  }
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .info-list li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 12.5px; color: #374151; font-weight: 600; line-height: 1.4;
+  }
+  .info-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .info-dot.navy { background: var(--navy); }
+  .info-dot.teal { background: var(--teal); }
+  .info-divider { height: 1.5px; background: #E5E9F5; border-radius: 2px; margin: 14px 0; }
+  .info-note {
+    background: var(--teal-light); border-radius: 10px; padding: 10px 12px;
+    font-size: 12px; font-weight: 600; color: #0F5D59; line-height: 1.5;
+  }
+
+  /* STEPS */
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .step-card {
+    background: var(--white); border-radius: var(--card-radius);
+    box-shadow: var(--shadow); padding: 22px 22px 20px;
+    position: relative; overflow: hidden;
+  }
+  .step-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .step-card.s1::before { background: var(--navy); }
+  .step-card.s2::before { background: var(--teal); }
+  .step-card.s3::before { background: var(--gold); }
+  .step-card.s4::before { background: #8B5CF6; }
+  .step-card.s5::before { background: var(--teal); }
+  .step-card.s6::before { background: var(--navy); }
+  .step-badge {
+    display: inline-flex; align-items: center;
+    font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 4px 12px;
+    border-radius: 50px; margin-bottom: 10px;
+  }
+  .step-badge.s1 { background: var(--navy-light); color: var(--navy); }
+  .step-badge.s2 { background: var(--teal-light); color: #0F8A81; }
+  .step-badge.s3 { background: var(--gold-light); color: #92400E; }
+  .step-badge.s4 { background: #F3EEFF; color: #5B21B6; }
+  .step-badge.s5 { background: var(--teal-light); color: #0F8A81; }
+  .step-badge.s6 { background: var(--navy-light); color: var(--navy); }
+  .step-card h3 { font-size: 15px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+  .step-card p, .step-card li { font-size: 13px; color: #4B5563; font-weight: 500; line-height: 1.6; }
+  .step-card ul { padding-left: 16px; margin-top: 6px; }
+  .step-card ul li { margin-bottom: 3px; }
+  .focus-box { margin-top: 12px; background: var(--gold-light); border-radius: 10px; padding: 10px 14px; }
+  .focus-box p { font-size: 11px; font-weight: 800; color: #92400E; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+  .focus-box span { font-size: 12px; font-weight: 600; color: #78350F; }
+  .notice-inline {
+    background: var(--teal-light); border-radius: 10px; padding: 10px 13px;
+    font-size: 12px; font-weight: 600; color: #0F5D59; margin-top: 12px;
+  }
+  .format-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .fmt-tag { padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 700; }
+  .fmt-tag.pdf { background: #FEE2E2; color: #991B1B; }
+  .fmt-tag.docx { background: var(--navy-light); color: var(--navy); }
+
+  /* TIPS */
+  .tips-card {
+    background: linear-gradient(135deg, var(--navy) 0%, #1E3A8A 100%);
+    border-radius: var(--card-radius); padding: 28px 32px; margin-top: 36px; color: #fff;
+  }
+  .tips-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 16px; }
+  .tips-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .tip {
+    background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 14px;
+  }
+  .tip-icon { font-size: 20px; margin-bottom: 6px; }
+  .tip p { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,0.85); }
+
+  /* FOOTER */
+  .footer { text-align: center; padding: 20px 20px 36px; font-size: 12.5px; color: #9CA3AF; font-weight: 500; }
+  .footer span { color: var(--teal); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Free Method · No Premium Needed</div>
+  <h1>ATS Resume <span>Creation Guide</span></h1>
+  <p class="hero-sub">Build a powerful, recruiter-ready resume using ChatGPT + Claude. Completely free, no premium accounts required.</p>
+  <div class="hero-pills">
+    <div class="hero-pill"><span>🤖</span> ChatGPT</div>
+    <div class="hero-pill"><span>✦</span> Claude</div>
+    <div class="hero-pill"><span>📄</span> ATS-Optimized</div>
+    <div class="hero-pill"><span>🎯</span> Job-Specific</div>
+  </div>
+  <button class="download-btn" onclick="window.print()">Download as PDF</button>
+</div>
+
+<div class="container">
+
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>What This Guide Does</h2>
+    <div class="line"></div>
+  </div>
+  <div class="overview-card">
+    <div class="overview-icon">💡</div>
+    <div class="overview-text">
+      <h3>Two AI Tools, One Powerful Resume</h3>
+      <p>This method combines the content intelligence of ChatGPT with Claude's clean formatting ability to produce a resume that passes ATS filters and impresses recruiters. This is not about templates. It is about <strong>clarity, numbers, and positioning.</strong></p>
+      <div class="overview-tools">
+        <span class="tool-tag chatgpt">ChatGPT — Extract and Structure</span>
+        <span class="tool-tag claude">Claude — Format and Polish</span>
+        <span class="tool-tag free">100% Free</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>The Prompts</h2>
+    <div class="line"></div>
+  </div>
+
+  <!-- PROMPT 1 -->
+  <div class="prompt-card">
+    <div class="prompt-header p1">
+      <div class="prompt-num">1</div>
+      <div class="prompt-header-text">
+        <h3>Prompt 1 — If You Already Have a Resume</h3>
+        <p>Copy this entire prompt and paste it into ChatGPT along with your existing resume</p>
+      </div>
+    </div>
+    <div class="prompt-layout">
+      <div class="prompt-code-side">
+        <div class="code-label">
+          <span class="code-label-text">Copy this prompt</span>
+          <button class="copy-btn" id="btn1" onclick="copyPrompt('box1','btn1')">Copy Prompt</button>
+        </div>
+        <div class="prompt-code-box" id="box1">I want to make my resume ATS-friendly and powerful for job applications.
+
+I have attached/pasted my current resume.
+
+Do not rewrite it immediately.
+
+First, read my resume carefully and ask me all the missing questions needed to make it strong, specific, and ATS-optimized.
+
+Ask questions about:
+
+1. The exact job title I am targeting
+2. The country, city, or market I am applying in
+3. The industry or company type I am targeting
+4. Specific companies or brands I want to apply to, if any
+5. My current and previous job responsibilities
+6. Revenue, sales, customer volume, inventory value, or business volume I handled
+7. Team size, leadership responsibilities, hiring, training, scheduling, and supervision
+8. Tools, software, POS systems, CRM systems, technical platforms, or reporting systems I used
+9. KPIs, targets, achievements, improvements, or measurable results
+10. Problems I solved in previous jobs
+11. Promotions, awards, recognition, or special responsibilities
+12. Certifications, education, and technical skills
+13. Keywords that should be included based on the target job
+14. Any gaps, weaknesses, or missing proof in my current resume
+
+After I answer your questions, create a complete ATS-friendly resume with:
+
+- Professional summary
+- Core competencies
+- Work experience
+- Achievement-based bullet points
+- Skills section
+- Education
+- Certifications
+- Location-specific and industry-specific keywords
+
+Make the resume clean, modern, single-column, ATS-friendly, and suitable for recruiters.
+
+Avoid tables, graphics, icons, heavy formatting, and unnecessary design.
+
+Make the resume sound professional, confident, and result-driven without exaggerating or lying.</div>
+      </div>
+      <div class="prompt-info-side">
+        <div class="info-side-title">What it covers</div>
+        <ul class="info-list">
+          <li><div class="info-dot navy"></div>Target job, location and industry</li>
+          <li><div class="info-dot navy"></div>Responsibilities in each role</li>
+          <li><div class="info-dot navy"></div>Numbers: revenue, team size, volume</li>
+          <li><div class="info-dot navy"></div>Tools, software and platforms used</li>
+          <li><div class="info-dot navy"></div>KPIs, results and achievements</li>
+          <li><div class="info-dot navy"></div>Promotions, awards and recognition</li>
+          <li><div class="info-dot navy"></div>Certifications and education</li>
+          <li><div class="info-dot navy"></div>Gaps or weak spots in your resume</li>
+          <li><div class="info-dot navy"></div>Job-specific ATS keywords</li>
+        </ul>
+        <div class="info-divider"></div>
+        <div class="info-note">ChatGPT will ask you questions first before building the resume.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMPT 2 -->
+  <div class="prompt-card">
+    <div class="prompt-header p2">
+      <div class="prompt-num">2</div>
+      <div class="prompt-header-text">
+        <h3>Prompt 2 — If You Are Starting From Scratch</h3>
+        <p>Copy this entire prompt and paste it into ChatGPT to build your resume from zero</p>
+      </div>
+    </div>
+    <div class="prompt-layout">
+      <div class="prompt-code-side">
+        <div class="code-label">
+          <span class="code-label-text">Copy this prompt</span>
+          <button class="copy-btn teal-style" id="btn2" onclick="copyPrompt('box2','btn2')">Copy Prompt</button>
+        </div>
+        <div class="prompt-code-box" id="box2">I want to create a complete ATS-friendly resume from scratch.
+
+Do not create the resume immediately.
+
+First, ask me all the questions needed to build a powerful, job-specific resume.
+
+Ask me questions about:
+
+1. My full name, contact number, email, LinkedIn, and location
+2. The exact job title I am targeting
+3. The country, city, or market I am applying in
+4. The industry or company type I want to work in
+5. Specific companies or brands I want to apply to, if any
+6. My total years of experience
+7. My current and previous job titles
+8. Company names, locations, and employment dates
+9. My daily responsibilities in each role
+10. Revenue, sales, customer volume, inventory value, project value, or workload I handled
+11. Team size, leadership responsibilities, training, hiring, scheduling, and supervision experience
+12. Tools, software, POS systems, CRM systems, technical platforms, reporting tools, or machinery I used
+13. KPIs, targets, achievements, improvements, or measurable results
+14. Problems I solved in previous roles
+15. Promotions, awards, recognition, or special responsibilities
+16. Education details
+17. Certifications, licenses, and training
+18. Technical skills and soft skills
+19. Languages known
+20. Career gap details, if any
+21. Visa status or relocation preference, if relevant
+22. Any job description I want to target
+
+After I answer, create a complete ATS-friendly resume with:
+
+- Name and contact section
+- Professional title
+- Professional summary
+- Core competencies
+- Work experience
+- Achievement-based bullet points
+- Skills section
+- Education
+- Certifications
+- Languages, if useful
+- Location-specific and job-specific keywords
+
+Make it clean, single-column, recruiter-friendly, and ATS-compatible.
+
+Avoid tables, graphics, icons, photos, columns, and unnecessary design.
+
+Use strong action verbs and measurable achievements wherever possible.
+
+Do not exaggerate or invent fake experience. If information is missing, ask before assuming.</div>
+      </div>
+      <div class="prompt-info-side">
+        <div class="info-side-title">What it covers</div>
+        <ul class="info-list">
+          <li><div class="info-dot teal"></div>Your full contact details</li>
+          <li><div class="info-dot teal"></div>Target job, location and industry</li>
+          <li><div class="info-dot teal"></div>All previous job titles and dates</li>
+          <li><div class="info-dot teal"></div>Daily responsibilities per role</li>
+          <li><div class="info-dot teal"></div>Numbers: revenue, team, volume</li>
+          <li><div class="info-dot teal"></div>Tools, software and platforms</li>
+          <li><div class="info-dot teal"></div>KPIs, results and achievements</li>
+          <li><div class="info-dot teal"></div>Education and certifications</li>
+          <li><div class="info-dot teal"></div>Languages, visa and career gaps</li>
+          <li><div class="info-dot teal"></div>Target job description keywords</li>
+        </ul>
+        <div class="info-divider"></div>
+        <div class="info-note">ChatGPT will ask everything before writing a single word.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS -->
+  <div class="section-label">
+    <div class="dot"></div>
+    <h2>Step-by-Step Process</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="steps-grid">
+    <div class="step-card s1">
+      <div class="step-badge s1">Step 1</div>
+      <h3>Define Your Target</h3>
+      <p>Before using AI, get clear on:</p>
+      <ul>
+        <li>Job title you are applying for</li>
+        <li>Country or city (UAE, Canada, India)</li>
+        <li>Industry (retail, IT, finance)</li>
+        <li>Level (entry, mid, senior)</li>
+      </ul>
+      <div class="focus-box">
+        <p>Remember</p>
+        <span>A resume must match the job. Generic resumes get ignored.</span>
+      </div>
+    </div>
+
+    <div class="step-card s2">
+      <div class="step-badge s2">Step 2</div>
+      <h3>Choose Your Starting Point</h3>
+      <p>Pick the right prompt based on where you are:</p>
+      <ul>
+        <li><strong>Option A:</strong> You have a resume — use Prompt 1</li>
+        <li><strong>Option B:</strong> Starting from zero — use Prompt 2</li>
+      </ul>
+      <div class="notice-inline">Both options are completely free. No premium account needed.</div>
+    </div>
+
+    <div class="step-card s3">
+      <div class="step-badge s3">Step 3</div>
+      <h3>Use ChatGPT to Extract Details</h3>
+      <p>Paste the prompt and your resume into ChatGPT. It will read your input, ask structured questions, and identify missing details.</p>
+      <div class="focus-box">
+        <p>Focus on</p>
+        <span>Numbers, responsibilities, tools used, problems solved, results achieved</span>
+      </div>
+    </div>
+
+    <div class="step-card s4">
+      <div class="step-badge s4">Step 4</div>
+      <h3>Generate the Resume</h3>
+      <p>After answering all questions, ChatGPT will produce your full resume. Make sure it has:</p>
+      <ul>
+        <li>Measurable results</li>
+        <li>Job-specific keywords</li>
+        <li>Industry-specific language</li>
+      </ul>
+    </div>
+
+    <div class="step-card s5">
+      <div class="step-badge s5">Step 5</div>
+      <h3>Format Using Claude</h3>
+      <p>Copy the ChatGPT output. Paste this into Claude:</p>
+      <div style="background:#0F1729; border-radius:10px; padding:12px 14px; margin-top:10px; font-family:'Courier New',monospace; font-size:11.5px; color:#C9D8FF; line-height:1.7;">
+"Convert this into a clean, professional, ATS-friendly resume. Keep it simple, single-column, and recruiter-friendly. Create this as a .docx"</div>
+    </div>
+
+    <div class="step-card s6">
+      <div class="step-badge s6">Step 6</div>
+      <h3>Export and Use</h3>
+      <p>Export your final resume in the right format:</p>
+      <div class="format-tags">
+        <span class="fmt-tag pdf">PDF for job applications</span>
+        <span class="fmt-tag docx">DOCX for portals</span>
+      </div>
+      <div style="margin-top:12px; font-size:12.5px; color:#4B5563; font-weight:600;">
+        Use a clean file name:<br>
+        <span style="color:var(--navy); font-weight:800;">YourName_JobTitle_Resume.pdf</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-card">
+    <h3>Pro Tips for the Best Results</h3>
+    <div class="tips-grid">
+      <div class="tip">
+        <div class="tip-icon">🔢</div>
+        <p>Always include numbers. Revenue managed, team size, sales targets, customer volume.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">🎯</div>
+        <p>Customize for every job. One-size-fits-all resumes perform poorly in ATS systems.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">🚫</div>
+        <p>Never use tables, icons, graphics, or photos. They break ATS parsing completely.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">✍️</div>
+        <p>Answer every question honestly. Do not exaggerate or invent fake experience.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">🔍</div>
+        <p>Pull keywords directly from the job description and mirror the language used.</p>
+      </div>
+      <div class="tip">
+        <div class="tip-icon">📄</div>
+        <p>Single-column, clean layout with strong action verbs and measurable achievements.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Built with ChatGPT + <span>Claude</span> &nbsp;·&nbsp; ATS Resume Creation Guide &nbsp;·&nbsp; Free Method
+</div>
+
+<script>
+function copyPrompt(boxId, btnId) {
+  var text = document.getElementById(boxId).innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById(btnId);
+    var orig = btn.innerText;
+    var origBg = btn.style.background;
+    var origColor = btn.style.color;
+    btn.innerText = 'Copied!';
+    btn.style.background = '#D1FAE5';
+    btn.style.color = '#065F46';
+    setTimeout(function() {
+      btn.innerText = orig;
+      btn.style.background = origBg;
+      btn.style.color = origColor;
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
